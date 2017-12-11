@@ -1,0 +1,32 @@
+#%RAML 1.0 Library
+types:
+ Error: !include Types/Error.raml
+ Success: !include Types/Success.raml
+ Customer:
+  properties:
+      custno:
+        required: false
+        type: number
+      firstname:
+        required: true
+        type: string
+      lastname:
+        required: false
+        type: string
+      address:
+        required: true
+        type: Address
+ Address:
+    properties:
+      street:
+        required: false
+        type: string
+      city:
+        required: true
+        type: string
+      state:
+        required: true
+        type: string
+      postcode:
+        required: true
+        type: number

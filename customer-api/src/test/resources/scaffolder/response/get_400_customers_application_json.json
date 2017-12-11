@@ -1,0 +1,12 @@
+{
+  "errors": [
+    {
+      "status": "400",
+      "description": "Unexpected error."
+    },
+    {
+      "status": "403",
+      "description": "Forbidden - Invalid SystemToken"
+    }   
+  ]
+}

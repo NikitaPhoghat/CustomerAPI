@@ -1,0 +1,147 @@
+#%RAML 1.0
+title: Customer Service API
+version: 1.0
+#baseUri: https://api.mulesoft.com/customers/
+baseUri: https://mocksvc.mulesoft.com/mocks/83144819-c5d8-4269-a208-0f6572970ee3
+protocols: [HTTPS, HTTP]
+mediaType: application/json
+securedBy: basicAuth
+uses: 
+  file-types: library/typeLibrary.raml
+securitySchemes: 
+  basicAuth:
+      description: Each request must contain the headers necessary for basic authentication
+      type: Basic Authentication
+      describedBy:
+        headers:
+          Authorization:
+            description: |
+              Used to send the Base64 encoded "username:password"
+              credentials
+            type: string
+        responses:
+          401:
+            description:
+              Unauthorized. Either the provided username and password
+              combination is invalid, or the user is not allowed to
+              access the content provided by the requested URL.
+traits: 
+ hasHeaders: 
+    headers:
+      Tenant-Id: 
+        displayName: Tenant-Id
+        description: Tenant id for multi-tenant environments
+        type: string
+        required: true
+      Content-type: 
+        displayName: Content-type
+        description: either xml or json
+        type: string
+        required: true
+        
+   
+/customers:
+   get:
+    description: Retrieve a list of customers
+    displayName: getCustomers
+    is: ["hasHeaders"]
+    queryParameters: 
+      page:
+        description: Specify the page that you want to retrieve
+        type: integer
+        example: 1
+    responses: 
+      200:
+        body:
+          application/json:
+            example: !include Example_Format/CustomerListResponse.json
+      400:
+        body: 
+          application/json:
+            example: !include Example_Format/BadResponseSample.json
+      500:
+        body: 
+          application/json:
+            example: !include Example_Format/ErrorResponsejson
+   post:
+     description: Create new customer
+     displayName: createCustomer
+     is: [hasHeaders]
+     body: 
+       application/json:
+         type: file-types.Customer
+         example:   
+          custno: 10
+          firstname: TestUser
+          lastname: Test
+          address:
+            street: Elizabeth
+            state: NSW
+            city: Sydney
+            postcode: 2051
+     responses: 
+       201:
+         headers: 
+           Accept: 
+             displayName: xml or json
+         body:
+           type: file-types.Success
+           example:
+            code: 201
+            message: Customer created successfully
+       500:
+         body: 
+           type: file-types.Error
+           example: !include Example_Format/ErrorResponsejson
+             
+   /{custno}:
+    uriParameters:
+       custno: integer
+    patch:
+      description: Upadte customer by id 
+      is: [hasHeaders]
+      body: 
+        application/json:
+         type: file-types.Customer
+         example:
+          custno: 10
+          firstname: TestUser
+          lastname: Test
+          address: 
+            street: Elizabeth
+            state: NSW
+            city: Sydney
+            postcode: 2051
+      responses: 
+       200:
+         body:
+           type: file-types.Success
+           example:
+            code: 200
+            message: Customer values updated successfully
+       500:
+         body: 
+           type: file-types.Error
+           example: !include Example_Format/ErrorResponsejson
+    delete:
+      description: Remove the specified one 
+      responses:
+        204:
+          headers: 
+            Accept:
+              displayName: success
+          body: 
+            type: file-types.Success
+            example: 
+             code: 204
+             message: Deleted successfully
+        500:
+           body: 
+            type: file-types.Error
+            example: !include Example_Format/ErrorResponsejson
+            
+/orders:
+   displayName: Oder details
+/products:
+     displayName: Products details
+   

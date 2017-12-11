@@ -1,0 +1,11 @@
+{
+"custno" : 10,
+"firstname" : "TestUser",
+"lastname" : "Test",
+"address" : {
+"street" : "Elizabeth",
+"state" : "NSW",
+"city" : "Sydney",
+"postcode" : 2051
+}
+}

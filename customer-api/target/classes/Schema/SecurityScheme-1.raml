@@ -1,0 +1,25 @@
+#%RAML 1.0 SecurityScheme
+type: OAuth 2.0
+describedBy: 
+  headers:
+    Authorization:
+      description: |
+        Used to send a valid OAuth 2 access token. Do not use
+         with the "access_token" query string parameter.
+      type: string
+  queryParameters:
+        access_token: 
+         description: |
+              Used to send a valid OAuth 2 access token. Do not use together with the "Authorization" header type: string
+  responses: 
+    401:
+      description: 
+              Bad OAuth request (e.g. wrong consumer key, bad nonce, expired
+              timestamp, etc.)
+    403:
+            description: |
+              Bad or expired token. To fix it, re-authenticate the user.          
+settings: 
+  accessTokenUri: https://acme.com/oauth/token
+  authorizationUri: https://acme.com/oauth/authorize
+  authorizationGrants: [ authorization_code,implicit, password, client_credentials]
