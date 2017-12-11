@@ -1,0 +1,13 @@
+{ "customerslist" :
+       [ 
+          { 
+          "customers" :
+            { "custNo" : "10",
+            "firstname" : "Test User",
+            "lastname" : "Test User",
+            "address":[{"street":"Elizabeth","city": "Sydney","state":"Nsw","postcode":"2051"}],
+			      "email":[{"email":"nikita.phoghat@gmail.com"}]           
+           }
+          }
+        ] 
+    }
